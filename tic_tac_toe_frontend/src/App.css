@@ -1,13 +1,22 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
+  /* Light theme colors & custom TicTacToe colors */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
+  --text-primary: #1a1a1a;
+  --text-secondary: #3498db;
   --border-color: #e9ecef;
-  --button-bg: #007bff;
+  --button-bg: #3498db;
   --button-text: #ffffff;
+  /* Tic Tac Toe palette */
+  --ttt-primary: #3498db;
+  --ttt-accent: #e74c3c;
+  --ttt-secondary: #2ecc71;
+  --ttt-board-bg: #f8f9fa;
+  --ttt-board-border: #3498db;
+  --ttt-x: #3498db;
+  --ttt-o: #e74c3c;
+  --ttt-win: #2ecc71;
 }
 
 [data-theme="dark"] {
@@ -100,5 +109,157 @@
     right: 10px;
     padding: 8px 16px;
     font-size: 12px;
+  }
+}
+
+/* ----------- Tic Tac Toe game styles ----------- */
+.ttt__title {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--ttt-primary);
+  margin: 20px 0 28px 0;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 8px rgba(52,152,219,0.08);
+}
+
+.ttt__game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ttt__board {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  grid-template-rows: repeat(3, 64px);
+  gap: 12px;
+  background: var(--ttt-board-bg);
+  border: 3px solid var(--ttt-board-border);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px 0 rgba(52,152,219,0.13);
+  margin-bottom: 30px;
+  margin-top: 10px;
+  padding: 22px 17px 14px 17px;
+  min-width: 216px;
+}
+
+.ttt__square {
+  background: #fff;
+  color: var(--ttt-primary);
+  border: 2px solid var(--ttt-board-border);
+  border-radius: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.18s, box-shadow 0.18s, border-color 0.21s;
+  box-shadow: 0 2px 8px rgba(46,204,113,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  width: 64px;
+  user-select: none;
+}
+
+.ttt__square--filled {
+  cursor: default;
+  background: #f2f2f6;
+}
+
+.ttt__square:nth-child(odd):not(.ttt__square--filled) {
+  background: #f9fcff;
+}
+
+.ttt__square:disabled {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+/* Distinct colors for X and O (bold) */
+.ttt__square {
+  color: var(--ttt-x);
+}
+.ttt__square:after {
+  content: "";
+}
+.ttt__square:contains("O"),
+.ttt__square[aria-label*="O"] {
+  color: var(--ttt-o) !important;
+}
+
+/* Game info and notifications */
+.ttt__info {
+  margin-top: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ttt__status {
+  font-size: 1.22rem;
+  font-weight: 600;
+  color: var(--ttt-primary);
+  min-height: 30px;
+  letter-spacing: 0.015em;
+}
+
+.ttt__status--finished {
+  color: var(--ttt-accent);
+  animation: ttt-win-pop 0.2s;
+}
+
+@keyframes ttt-win-pop {
+  0% { transform: scale(1);}
+  40% { transform: scale(1.16);}
+  100% { transform: scale(1);}
+}
+
+.ttt__reset-btn {
+  margin-top: 5px;
+  background: var(--ttt-secondary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 11px 28px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(46,204,113,0.11);
+}
+.ttt__reset-btn:hover, .ttt__reset-btn:focus {
+  background: var(--ttt-accent);
+  transform: translateY(-2px) scale(1.03);
+  outline: none;
+}
+
+.ttt__footer {
+  margin-top: 36px;
+  font-size: 14px;
+  color: #aaa;
+  letter-spacing: 0.02em;
+}
+
+.ttt__credits {
+  opacity: 0.7;
+  font-family: inherit;
+}
+
+/* Responsive styles for soft scaling */
+@media (max-width: 540px) {
+  .ttt__board {
+    grid-template-columns: repeat(3, 48px);
+    grid-template-rows: repeat(3, 48px);
+    min-width: unset;
+    padding: 12px 6px 6px 6px;
+    gap: 8px;
+  }
+  .ttt__square {
+    font-size: 1.2rem;
+    height: 48px;
+    width: 48px;
   }
 }
